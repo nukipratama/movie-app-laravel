@@ -17,10 +17,9 @@ GET /api/v1/movies
 GET /api/v1/movie/{id}
 ```
 | Parameter | Type | Description |
-
 | :-------- | :------- | :------------------------- |
-
 | `id` | `string` | Required. Movie id from List Movies.|
+
 
 ## Installation
 
