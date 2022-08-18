@@ -1,0 +1,250 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Movie App Laravel",
+    "description": "A Simple Movie App using Laravel Guzzle HTTP Client and https://imdb-api.com/",
+    "contact": {
+      "name": "Nuki Pratama",
+      "url": "https://github.com/nukipratama/movie-app-laravel"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:8000/api/v1"
+    }
+  ],
+  "paths": {
+    "/movies": {
+      "get": {
+        "summary": "List Movies",
+        "description": "Return List of Movies.",
+        "operationId": "getMovies",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Filter results based on similar movie title.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return movies data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listMovies_200"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movie/{id}": {
+      "get": {
+        "summary": "Detail Movie",
+        "description": "Return Detail of Movies.",
+        "operationId": "getMovieById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Movie id from List Movies.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return movie detail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/detailMovie_200"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Movie": {
+        "required": [
+          "id",
+          "title",
+          "imdbRating",
+          "image",
+          "genres",
+          "stars"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "tt12593682"
+          },
+          "title": {
+            "type": "string",
+            "example": "Bullet Train"
+          },
+          "imdbRating": {
+            "type": "string",
+            "example": "7.5"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://m.media-amazon.com/images/M/MV5BMDU2ZmM2OTYtNzIxYy00NjM5LTliNGQtN2JmOWQzYTBmZWUzXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_UX128_CR0,12,128,176_AL_.jpg"
+          },
+          "plot": {
+            "type": "string",
+            "example": "Five assassins aboard a fast moving bullet train find out their missions have something in common."
+          },
+          "genres": {
+            "type": "string",
+            "example": "Action, Comedy, Thriller"
+          },
+          "stars": {
+            "type": "string",
+            "example": "Brad Pitt, Joey King, Aaron Taylor-Johnson, Brian Tyree Henry"
+          }
+        }
+      },
+      "DetailMovie": {
+        "required": [
+          "id",
+          "title",
+          "imdbRating",
+          "image",
+          "plot",
+          "awards",
+          "directors",
+          "writers",
+          "stars",
+          "genreList",
+          "companyList"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "tt1375666"
+          },
+          "title": {
+            "type": "string",
+            "example": "Inception"
+          },
+          "imdbRating": {
+            "type": "string",
+            "example": "8.8"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_Ratio0.6762_AL_.jpg"
+          },
+          "plot": {
+            "type": "string",
+            "example": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster."
+          },
+          "awards": {
+            "type": "string",
+            "example": "Top rated movie #13 | Won 4 Oscars, 157 wins & 220 nominations total"
+          },
+          "directors": {
+            "type": "string",
+            "example": "Christopher Nolan"
+          },
+          "writers": {
+            "type": "string",
+            "example": "Christopher Nolan"
+          },
+          "stars": {
+            "type": "string",
+            "example": "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page"
+          },
+          "genreList": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "example": "Action"
+                },
+                "value": {
+                  "type": "string",
+                  "example": "Action"
+                }
+              }
+            }
+          },
+          "companyList": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "co0002663"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Warner Bros."
+                }
+              }
+            }
+          }
+        }
+      },
+      "listMovies_200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Movie"
+            }
+          }
+        }
+      },
+      "detailMovie_200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/DetailMovie"
+          }
+        }
+      }
+    }
+  }
+}
